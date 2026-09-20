@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://6ed6qif2j8xl"]
+
+[ext_resource type="Script" uid="uid://yb4dtser1svj" path="res://Scenes/Characters/player_old.gd" id="1_40svl"]
+[ext_resource type="Texture2D" uid="uid://ckvxtsr30f5cr" path="res://Assets/Tomato_old/tomato_sheet_simple.png" id="2_al8ar"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1299435305]
+script = ExtResource("1_40svl")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=206277520]
+texture = ExtResource("2_al8ar")
+hframes = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=996905663]

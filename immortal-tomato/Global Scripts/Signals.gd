@@ -1,0 +1,4 @@
+extends Node
+
+signal new_target_position_selected
+signal new_units_selected

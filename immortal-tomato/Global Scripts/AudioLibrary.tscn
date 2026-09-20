@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://di7a4yhwipa3b"]
+
+[ext_resource type="Script" uid="uid://cedgc037ohaum" path="res://Global Scripts/AudioLibrary.gd" id="1_vbg3n"]
+
+[node name="AudioLibrary" type="Node" unique_id=1160150116]
+script = ExtResource("1_vbg3n")

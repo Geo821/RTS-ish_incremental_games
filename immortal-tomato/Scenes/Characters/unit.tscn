@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://ceenxj0qosso7"]
+
+[ext_resource type="Script" uid="uid://c68jg7egh7sr2" path="res://Scenes/Characters/unit.gd" id="1_40svl"]
+[ext_resource type="Shader" uid="uid://ba1kc70qv652a" path="res://Shaders/outline.gdshader" id="2_v4r6c"]
+[ext_resource type="Texture2D" uid="uid://b273c4afb6wcx" path="res://Assets/Sprites/Tomato/tomato-Sheet.png" id="3_al8ar"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nq7qo"]
+atlas = ExtResource("3_al8ar")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4r6c"]
+atlas = ExtResource("3_al8ar")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxvde"]
+atlas = ExtResource("3_al8ar")
+region = Rect2(40, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lg8i"]
+atlas = ExtResource("3_al8ar")
+region = Rect2(60, 0, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ygic0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq7qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4r6c")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4r6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nq7qo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxvde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lg8i")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_36n4f"]
+shader = ExtResource("2_v4r6c")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/corner_pixel = false
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ygic0"]
+radius = 7.071068
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v4r6c"]
+radius = 2.0
+
+[node name="Unit" type="CharacterBody2D" unique_id=1798829669]
+platform_floor_layers = 0
+script = ExtResource("1_40svl")
+
+[node name="NormalSprite" type="AnimatedSprite2D" parent="." unique_id=371473799]
+sprite_frames = SubResource("SpriteFrames_ygic0")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.86834645
+
+[node name="OutlinedSprite" type="AnimatedSprite2D" parent="." unique_id=1847290026]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_36n4f")
+sprite_frames = SubResource("SpriteFrames_ygic0")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.7733887
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=756048382]
+shape = SubResource("CircleShape2D_ygic0")
+
+[node name="DetectPossibleMoveArea" type="Area2D" parent="." unique_id=1616826768]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectPossibleMoveArea" unique_id=426541809]
+position = Vector2(10, 0)
+shape = SubResource("CircleShape2D_v4r6c")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=1939394963]
+
+[node name="RayCast2D" type="RayCast2D" parent="Node2D" unique_id=199107718]
+unique_name_in_owner = true
+position = Vector2(8, 0)
+
+[node name="CheckIfStuckTimer" type="Timer" parent="." unique_id=551948131]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="CheckIfStuckTimer" to="." method="_on_check_if_stuck_timer_timeout"]

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bshmpsyiahvak"]
+
+[sub_resource type="GDScript" id="GDScript_ygic0"]
+script/source = "extends Camera2D
+
+@export var zoom_speed := 0.1
+@export var min_zoom := 0.15
+@export var max_zoom := 3.0
+
+var panning := false
+var last_mouse_position := Vector2.ZERO
+
+func _input(event):
+	if event is InputEventMouseButton:
+
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
+			panning = event.pressed
+			last_mouse_position = event.position
+
+		if event.pressed:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				zoom_at_mouse(1.0)
+
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				zoom_at_mouse(-1.0)
+
+
+	if event is InputEventMouseMotion and panning:
+		var mouse_delta = event.position - last_mouse_position
+
+		position -= mouse_delta / zoom.x
+
+		last_mouse_position = event.position
+
+
+func zoom_at_mouse(direction: float):
+	var mouse_world_before := get_global_mouse_position()
+
+	zoom += Vector2.ONE * direction * zoom_speed
+	zoom.x = clamp(zoom.x, min_zoom, max_zoom)
+	zoom.y = zoom.x
+
+	var mouse_world_after := get_global_mouse_position()
+
+	position += mouse_world_before - mouse_world_after
+	#last_mouse_position = event.position
+"
+
+[node name="Camera2D" type="Camera2D" unique_id=669609974]
+anchor_mode = 0
+script = SubResource("GDScript_ygic0")
